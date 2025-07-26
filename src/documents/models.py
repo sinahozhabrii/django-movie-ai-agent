@@ -3,7 +3,7 @@ from config.settings import AUTH_USER_MODEL
 
 user = AUTH_USER_MODEL
 # Create your models here.
-class Documents(models.Model):
+class Document(models.Model):
     owner = models.ForeignKey(user,on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     content = models.TextField()
