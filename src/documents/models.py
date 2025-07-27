@@ -14,10 +14,14 @@ class Document(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
     
-    def save(self, force_insert: bool = ..., force_update: bool = ..., using: str | None = ..., update_fields: Iterable[str] | None = ...) -> None:
+    def __str__(self):
+        return f'{self.title}'
+    
+    
+    def save(self,*args, **kwargs):
         if self.active and self.active_at == None:
             self.active_at = timezone.now()
         else:
             self.active_at = None
             
-        return super().save(force_insert, force_update, using, update_fields)
+        return super().save(*args,**kwargs)

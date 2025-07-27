@@ -5,7 +5,7 @@ import sys
 NOTEBOOKS_DIR = pathlib.Path(__file__).parent
 REPO_DIR = NOTEBOOKS_DIR.parent
 DJANGO_PROJECT_ROOT = REPO_DIR / "src"
-DJANGO_SETTINGS_MODULE = "cfehome.settings"
+DJANGO_SETTINGS_MODULE = "config.settings"
 
 
 def init(verbose=False):
