@@ -1,6 +1,6 @@
 from urllib import response
 from langchain_core.runnables import RunnableConfig
-from tmdb.client import search_movie,movie_detail
+from tmdb.client import search_movie as tmdb_search_movie,movie_detail as tmdb_movie_detail
 def search_movie(query:str,limit=5,config:RunnableConfig={}):
     """ search the most recent LIMIT movies from THE MOVIE DATA BASE API with the max of 25
     
@@ -13,7 +13,7 @@ def search_movie(query:str,limit=5,config:RunnableConfig={}):
     user_id = configurable.get('user_id')
     print('Searching with user', user_id)
     
-    response = search_movie(query=query)
+    response = tmdb_search_movie(query=query)
         
     try:
         total_results = int(response.get('total_results'))
@@ -39,7 +39,7 @@ def movie_detail(movie_id:int,config:RunnableConfig={}):
     user_id = configurable.get('user_id')
     print('Searching with user', user_id)
     
-    response = movie_detail(movie_id=movie_id)
+    response = tmdb_movie_detail(movie_id=movie_id)
     
     return response
 

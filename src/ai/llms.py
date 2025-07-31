@@ -5,7 +5,7 @@ from decouple import config
 OPENAI_API_KEY = config('OPENAI_API_KEY',default='')
 BASE_URL = config('BASE_URL',default='')
 
-def get_openai_model(model='gpt-4.1'):
+def get_openai_model(model='gpt-4o-mini'):
     if model == None:
         model = 'gpt-4o-mini'
     return ChatOpenAI(

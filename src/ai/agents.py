@@ -20,7 +20,7 @@ def get_movie_discovery_agent(checkpointer=None):
         model=model,
         tools=movie_discovery_tools_list,
         prompt='you are helpfull assistante for discovring info about movies',
-        checkpointer=checkpointer
+        checkpointer=checkpointer,
         
     )
     

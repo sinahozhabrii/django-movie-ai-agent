@@ -24,7 +24,7 @@ def search_movie(query:str,page:int=1,raw=False):
     
     response = requests.get(url, headers=headers,params=params)
 
-    if raw:
+    if raw == True:
         return response
     
     return response.json()
@@ -38,10 +38,7 @@ def movie_detail(movie_id:int,raw=False):
     headers = get_headers()
     response = requests.get(url,headers=headers,params=params)
     
-    if raw:
+    if raw == True:
         return response
     
     return response.json()
-
-
-search_movie('lord of the rings')
