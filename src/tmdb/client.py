@@ -42,3 +42,6 @@ def movie_detail(movie_id:int,raw=False):
         return response
     
     return response.json()
+
+
+search_movie('lord of the rings')
