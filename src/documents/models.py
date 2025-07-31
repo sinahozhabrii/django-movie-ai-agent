@@ -21,6 +21,8 @@ class Document(models.Model):
     def save(self,*args, **kwargs):
         if self.active and self.active_at == None:
             self.active_at = timezone.now()
+        elif self.active and self.active_at:
+            self.active_at = self.active_at
         else:
             self.active_at = None
             
