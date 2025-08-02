@@ -7,7 +7,8 @@ def get_document_agent(checkpointer=None):
         model=model,
         tools=document_tools_list,
         prompt='you are helpfull assistante for managing documents within this app',
-        checkpointer=checkpointer
+        checkpointer=checkpointer,
+        name='document-assistant'
         
     )
     
@@ -21,7 +22,7 @@ def get_movie_discovery_agent(checkpointer=None):
         tools=movie_discovery_tools_list,
         prompt='you are helpfull assistante for discovring info about movies',
         checkpointer=checkpointer,
-        
+        name='movie-assistant'
     )
     
     return agent
