@@ -3,6 +3,10 @@ from documents.models import Document
 from langchain_core.runnables import RunnableConfig
 from langchain_core.tools import tool
 from django.db.models import Q
+from mypermit import permit as permit_client
+from asgiref.sync import async_to_sync
+
+permit = permit_client
 
 @tool
 def search_query_documents(query:str,config:RunnableConfig= {}):
@@ -88,12 +92,18 @@ def create_documents(title:str,content:str,config:RunnableConfig= {}):
     content = without limit long form text in many paragraphs or pages 
     
     """
+    
 
     configurable = config.get('configurable') or config.get('meta_data')
     user_id = configurable.get('user_id')
     if user_id == None:
         raise Exception('invalid request for user')
     
+    has_perm = async_to_sync(permit.check)(f'{user_id}','create','document')
+    if not has_perm:
+        raise Exception('you do not have permission to create document')
+
+        
     doc_obj = Document.objects.create(owner_id = user_id,title=title,content=content,active=True)
     
     response_data={
