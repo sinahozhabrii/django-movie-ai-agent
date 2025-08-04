@@ -24,6 +24,9 @@ def search_query_documents(query:str,config:RunnableConfig= {}):
         'active' : True,
         'owner_id' : user_id
     }
+    has_perm = async_to_sync(permit.check)(f'{user_id}','read','document')
+    if not has_perm:
+        raise Exception('you do not have permission to read document')
     try:
         doc_objs = Document.objects.filter(**defualt_look_up).filter(Q(title__icontains=query)|Q(content__icontains=query))
     except Document.DoesNotExist:
@@ -48,6 +51,9 @@ def documents_list(config:RunnableConfig= {}):
     """ list 5 recent documents for this user """
     configurable = config.get('configurable') or config.get('meta_data')
     user_id = configurable.get('user_id')
+    has_perm = async_to_sync(permit.check)(f'{user_id}','read','document')
+    if not has_perm:
+        raise Exception('you do not have permission to read document')
     try:
         doc_objs = Document.objects.filter(owner_id =user_id,active=True).order_by('-create_at')[:5]
     except Document.DoesNotExist:
@@ -70,6 +76,9 @@ def get_document(document_id:int,config:RunnableConfig={}):
     """ get a document with document id for the this user """
     configurable = config.get('configurable') or  config.get('meta_data') 
     user_id = configurable.get('user_id')
+    has_perm = async_to_sync(permit.check)(f'{user_id}','read','document')
+    if not has_perm:
+        raise Exception('you do not have permission to read document')
     try:
         doc_obj = Document.objects.get(pk=document_id,owner_id=user_id)
     except Document.DoesNotExist:
@@ -130,6 +139,9 @@ def delete_documents(document_id:int,config:RunnableConfig= {}):
     user_id = configurable.get('user_id')
     if user_id == None:
         raise Exception('invalid request for user')
+    has_perm = async_to_sync(permit.check)(f'{user_id}','delete','document')
+    if not has_perm:
+        raise Exception('you do not have permission to delete document')
     try:
         doc_obj = Document.objects.get(owner_id = user_id,pk=document_id,active=True)
     except Document.DoesNotExist:
@@ -157,6 +169,9 @@ def update_documents(document_id:int,title:str =None,content:str =None,config:Ru
     user_id = configurable.get('user_id')
     if user_id == None:
         raise Exception('invalid request for user')
+    has_perm = async_to_sync(permit.check)(f'{user_id}','update','document')
+    if not has_perm:
+        raise Exception('you do not have permission to update document')
     try:
         doc_obj = Document.objects.get(owner_id = user_id,pk=document_id,active=True)
     except Document.DoesNotExist:
