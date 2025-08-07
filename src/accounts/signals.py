@@ -1,12 +1,12 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.contrib.auth.models import User
+from accounts.models import CustomUser
 from mypermit import permit
 from asgiref.sync import async_to_sync
 from permit import RoleAssignmentCreate
 
    
-@receiver(signal=post_save,sender=User)
+@receiver(signal=post_save,sender=CustomUser)
 def sync_created_user_with_permit(sender,instance,created,**kwargs):
     if created:
         user_data = {
