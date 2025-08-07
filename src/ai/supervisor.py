@@ -1,7 +1,7 @@
 from langgraph_supervisor import create_supervisor
 from .llms import get_openai_model
 from .agents import get_document_agent,get_movie_discovery_agent
-def get_agents_supervisor(checkpointer=None):
+def get_agents_supervisor(checkpointer=None,store=None):
     model = get_openai_model()
     supervisor = create_supervisor(
         model=model,
@@ -14,5 +14,5 @@ def get_agents_supervisor(checkpointer=None):
             "Do not do any work yourself only use agents and thier tools"
         ),
         
-    ).compile(checkpointer=checkpointer)
+    ).compile(checkpointer=checkpointer,store=store)
     return supervisor
