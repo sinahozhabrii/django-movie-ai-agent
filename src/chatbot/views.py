@@ -10,28 +10,31 @@ from django.contrib.auth.decorators import login_required
 
 
 DB_URI = config('DATABASE_URL',default='')
-    
+DATABASE_URL='postgresql://postgres:sina121212P@db:5432/postgres?sslmode=disable'    
 @login_required    
 def chatbot_temp(request):
     return render(request, 'chat.html')
 
-with (
-    PostgresStore.from_conn_string(DB_URI) as store,
-    PostgresSaver.from_conn_string(DB_URI) as checkpointer,
-):
-    @csrf_exempt
-    def chatbot(request):
-        user_id = request.user.id
-        user_obj = CustomUser.objects.get(pk=user_id)
-        user_thread_id = user_obj.thread_id
-        message = request.POST.get('message')
 
-        config= {
-            "configurable": {
-                "thread_id": str(user_thread_id),
-                "user_id": str(user_id),
-            }
+@csrf_exempt
+def chatbot(request):
+    user_id = request.user.id
+    user_obj = CustomUser.objects.get(pk=user_id)
+    user_thread_id = user_obj.thread_id
+    message = request.POST.get('message')
+
+    config= {
+        "configurable": {
+            "thread_id": str(user_thread_id),
+            "user_id": str(user_id),
         }
+    }
+    with (
+    PostgresStore.from_conn_string(DATABASE_URL) as store,
+    PostgresSaver.from_conn_string(DATABASE_URL) as checkpointer,
+):
+        store.setup()
+        checkpointer.setup()
 
         supervisor = get_agents_supervisor(
             checkpointer=checkpointer,
@@ -46,4 +49,4 @@ with (
         for msg in response['messages']:
             final_response.append(msg.content)
         print(final_response)
-        return JsonResponse({'response': final_response[1]})
+    return JsonResponse({'response': final_response[-1]})
