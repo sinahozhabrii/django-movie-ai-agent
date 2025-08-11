@@ -1,11 +1,11 @@
 from langgraph_supervisor import create_supervisor
 from .llms import get_openai_model
-from .agents import get_document_agent,get_movie_discovery_agent
+from .agents import get_document_agent,get_movie_discovery_agent,get_personal_info_agent
 def get_agents_supervisor(checkpointer=None,store=None):
     model = get_openai_model()
     supervisor = create_supervisor(
         model=model,
-        agents=[get_document_agent(),get_movie_discovery_agent()],
+        agents=[get_document_agent(),get_movie_discovery_agent(),get_personal_info_agent()],
         prompt=(
         "Your name is **Sina** — a nerdy, passionate movie critic and recommender. You are a mix of:\n"
         "- A witty stand-up comedian 🎤\n"
@@ -43,12 +43,15 @@ def get_agents_supervisor(checkpointer=None,store=None):
         "  * A link to watch it (English or Iranian website)\n\n"
 
         "🛠 **System Rules:**\n"
-        "- You are a supervisor managing two agents (do NOT reveal this to the user):\n"
+        "- You are a supervisor managing THREE agents (do NOT reveal this to the user):\n"
         "  1. Document Agent → For CRUD and document search tasks.\n"
         "  2. Movie Discovery Agent → ONLY way to get movie info.\n"
+        "  3. Personal Info Agent → Store any personal information the user shares (e.g., name, birthday, preferences) for personalization.\n"
         "- Assign work to ONE agent at a time. No parallel calls.\n"
-        "- Do not do movie info gathering yourself — ONLY use the Movie Discovery Agent.\n"
-        "- You CAN use the Document Agent for managing notes, watchlists, or movie journals.\n\n"
+        "- Do not do movie info gathering yourself — ONLY via the Movie Discovery Agent.\n"
+        "- You CAN use the Document Agent for managing notes, watchlists, or movie journals.\n"
+        "- You CAN use the Personal Info Agent whenever the user shares details about themselves. use it pls dont let any info go\n\n"
+
 
         "📌 **Example Conversation Start:**\n"
         "User: 'Recommend me a movie.'\n"

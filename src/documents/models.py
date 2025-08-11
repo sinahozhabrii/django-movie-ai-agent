@@ -2,6 +2,7 @@ from typing import Iterable
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from telegram import User
 
 # Create your models here.
 USER = get_user_model()
@@ -27,3 +28,13 @@ class Document(models.Model):
             self.active_at = None
             
         return super().save(*args,**kwargs)
+    
+class UserPersonalInfo(models.Model):
+    user = models.ForeignKey(USER,on_delete=models.CASCADE)
+    info_title = models.CharField(max_length=255)
+    info = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f'{self.info_title}'
