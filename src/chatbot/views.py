@@ -9,6 +9,7 @@ from decouple import config
 from django.contrib.auth.decorators import login_required
 
 
+
 DB_URI = config('DATABASE_URL',default='')
 DATABASE_URL='postgresql://postgres:sina121212P@db:5432/postgres?sslmode=disable'    
 @login_required    
@@ -40,7 +41,7 @@ def chatbot(request):
             checkpointer=checkpointer,
             store=store
         )
-
+        print(message)
         response = supervisor.invoke(
             {"messages": [{"role": "user", "content": message}]},
             config
