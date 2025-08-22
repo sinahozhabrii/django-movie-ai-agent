@@ -57,4 +57,38 @@ def movie_detail(movie_id:int,config:RunnableConfig={}):
     return response
 
 
-movie_discovery_tools_list = [movie_detail,search_movie]
+
+
+def get_movie_download_info(title=None,published_year=None,summary=None,poster_url=None,config:RunnableConfig={}):
+    """put movie info you got from the other tools movie_detail or search_movie into dict
+    
+    args:
+    title: title of the movie str max char 220
+    summary : summeary of the movie summerize of too long max 220 char
+    poster_url: cover/poster of the movie get it from the movie database or internet 
+    published_year: return only number like 1990,2022,2025
+    
+    
+    """
+    configurable = config.get('configurable') or config.get('metadata')
+    user_id = configurable.get('user_id')
+    
+    link_movie_title = title.replace(' ', '-')
+    
+    response ={"type": "movies",
+    "movies": [
+        {
+        "title": title,
+        "poster_url": f"{poster_url}",
+        "summary":summary,
+        "sources": [
+            {"site_name":"digimoviez","link":f"https://digimoviez.com/{link_movie_title}-{published_year}/","qualities":["720p","1080p"]},
+            {"site_name":"zardfilm","link":f"https://zdfilm.ir/movie/{link_movie_title}-{published_year}/","qualities":["480p"]}
+        ]
+        }
+    ]
+    }
+    return response
+
+
+movie_discovery_tools_list = [movie_detail,search_movie,get_movie_download_info]

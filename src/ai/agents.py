@@ -33,7 +33,7 @@ def get_movie_discovery_agent(checkpointer=None):
     agent = create_react_agent(
         model=model.bind(max_token=256),
         tools=movie_discovery_tools_list,
-        prompt='you are helpfull assistante for discovring info about movies',
+        prompt='you are helpfull assistante for discovering info about movies and provide download info and links',
         checkpointer=checkpointer,
         name='movie-assistant',
     )

@@ -11,13 +11,12 @@
     />
     <style>
       :root {
-        --accent: #7c3aed; /* بنفش پیش‌فرض */
+        --accent: #7c3aed; 
         --bg: #ffffff;
         --card: #f8fafc;
         --text: #0f172a;
         --muted: #6b7280;
       }
-      /* مقادیر دارک مود با کلاس .dark روی <html> */
       .dark :root,
       .dark {
         --bg: #0b1020;
@@ -25,8 +24,6 @@
         --text: #e6eef8;
         --muted: #9aa4b2;
       }
-
-      /* اجازه میدیم accent رو با css var تغییر بدیم */
       .accent {
         background: linear-gradient(
           90deg,
@@ -35,118 +32,32 @@
         );
         border-color: var(--accent);
       }
-
-      /* استایل پیام کاربر و بات با var */
-      .user-bubble {
-        background: var(--accent);
-        color: white;
-      }
-      .bot-bubble {
-        background: var(--card);
-        color: var(--text);
-      }
-
-      /* scrollbar نازک */
-      .chat-scroll::-webkit-scrollbar {
-        width: 8px;
-      }
-      .chat-scroll::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.12);
-        border-radius: 8px;
-      }
-      .chat-scroll {
-        -webkit-overflow-scrolling: touch;
-      }
-
-      /* انیمیشن ظریف */
-      .fade-in {
-        animation: fadeIn 0.22s ease;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(6px);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
-      }
-
-      /* sidebar transition */
-      #sidebar {
-        transition: width 0.22s ease, transform 0.22s ease,
-          box-shadow 0.22s ease;
-      }
-      #sidebar.expanded {
-        width: 18rem;
-      } /* وقتی باز است */
-      #sidebar.collapsed {
-        width: 4.5rem;
-      } /* حالت آیکون فقط */
-
-      /* نمایش متن منو فقط وقتی expanded است */
-      .menu-label {
-        opacity: 0;
-        transform: translateX(6px);
-        transition: all 0.18s ease;
-        pointer-events: none;
-        white-space: nowrap;
-      }
-      #sidebar.expanded .menu-label {
-        opacity: 1;
-        transform: translateX(0);
-        pointer-events: auto;
-      }
-
-      /* موبایل: sidebar به صورت absolute باز میشه روی محتوا */
+      .user-bubble { background: var(--accent); color: white; }
+      .bot-bubble { background: var(--card); color: var(--text); }
+      .chat-scroll::-webkit-scrollbar { width: 8px; }
+      .chat-scroll::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 8px; }
+      .chat-scroll { -webkit-overflow-scrolling: touch; }
+      .fade-in { animation: fadeIn 0.22s ease; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+      #sidebar { transition: width 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease; }
+      #sidebar.expanded { width: 18rem; }
+      #sidebar.collapsed { width: 4.5rem; }
+      .menu-label { opacity: 0; transform: translateX(6px); transition: all 0.18s ease; pointer-events: none; white-space: nowrap; }
+      #sidebar.expanded .menu-label { opacity: 1; transform: translateX(0); pointer-events: auto; }
       @media (max-width: 768px) {
-        #sidebar {
-          position: fixed;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          z-index: 60;
-          transform: translateX(-100%);
-          box-shadow: 0 6px 30px rgba(2, 6, 23, 0.4);
-        }
-        #sidebar.open {
-          transform: translateX(0);
-        }
-        #main-overlay {
-          display: block;
-          position: fixed;
-          inset: 0;
-          z-index: 50;
-          background: rgba(2, 6, 23, 0.35);
-        }
+        #sidebar { position: fixed; left: 0; top: 0; bottom: 0; z-index: 60; transform: translateX(-100%); box-shadow: 0 6px 30px rgba(2,6,23,0.4); }
+        #sidebar.open { transform: translateX(0); }
+        #main-overlay { display: block; position: fixed; inset: 0; z-index: 50; background: rgba(2,6,23,0.35); }
       }
     </style>
   </head>
-  <body
-    class="min-h-screen flex bg-[var(--bg)] text-[var(--text)]"
-    id="body-root"
-  >
-    <!-- Sidebar -->
-    <aside
-      id="sidebar"
-      class="collapsed bg-white dark:bg-[#0b1220] h-full flex flex-col items-stretch shadow-md"
-    >
-      <div
-        class="flex items-center justify-between px-3 py-3 border-b border-gray-100 dark:border-gray-700"
-      >
+  <body class="min-h-screen flex bg-[var(--bg)] text-[var(--text)]" id="body-root">
+    
+    <aside id="sidebar" class="collapsed bg-white dark:bg-[#0b1220] h-full flex flex-col items-stretch shadow-md">
+      <div class="flex items-center justify-between px-3 py-3 border-b border-gray-100 dark:border-gray-700">
         <div class="flex items-center gap-3">
-          <div
-            id="brand"
-            class="w-10 h-10 rounded-lg flex items-center justify-center"
-            style="background: var(--accent)"
-          >
-            <svg
-              class="w-6 h-6 text-white"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-            >
+          <div id="brand" class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--accent)">
+            <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M12 2L15 8H9L12 2zM6 10h12v10H6z" />
             </svg>
           </div>
@@ -155,277 +66,112 @@
             <div class="text-xs text-[var(--muted)]">چت‌بات فیلم</div>
           </div>
         </div>
-
-        <!-- دکمه موبایل برای باز کردن سایدبار -->
-        <button
-          id="sidebar-toggle-mobile"
-          class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-          aria-label="باز کردن منو"
-        >
+        <button id="sidebar-toggle-mobile" class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="باز کردن منو">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-            <path
-              stroke="currentColor"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
+            <path stroke="currentColor" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
       </div>
-
-      <!-- منوها -->
       <nav class="flex-1 px-1 py-4 space-y-1">
-        <button
-          data-action="theme"
-          class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900"
-        >
+        <button data-action="theme" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900">
           <span class="w-10 flex items-center justify-center text-lg">🌗</span>
           <span class="menu-label text-sm">تغییر تم</span>
         </button>
-
-        <button
-          id="open-customize"
-          class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900"
-        >
+        <button id="open-customize" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900">
           <span class="w-10 flex items-center justify-center text-lg">🎨</span>
           <span class="menu-label text-sm">شخصی‌سازی رنگ</span>
         </button>
-
-        <a
-          href="#"
-          class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900"
-        >
+        <a href="#" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900">
           <span class="w-10 flex items-center justify-center text-lg">⚙️</span>
           <span class="menu-label text-sm">تنظیمات</span>
         </a>
-
-        <a
-          href="#"
-          class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900"
-        >
+        <a href="#" class="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-purple-50 dark:hover:bg-purple-900">
           <span class="w-10 flex items-center justify-center text-lg">🤖</span>
           <span class="menu-label text-sm">درباره بات</span>
         </a>
       </nav>
-
-      <!-- footer user -->
-      <div
-        class="px-3 py-3 border-t border-gray-100 dark:border-gray-700 flex items-center gap-3"
-      >
-        <img
-          id="sidebar-avatar"
-          src="https://i.pravatar.cc/40"
-          alt="avatar"
-          class="w-10 h-10 rounded-full border-2"
-          style="border-color: var(--accent)"
-        />
+      <div class="px-3 py-3 border-t border-gray-100 dark:border-gray-700 flex items-center gap-3">
+        <img id="sidebar-avatar" src="https://i.pravatar.cc/40" alt="avatar" class="w-10 h-10 rounded-full border-2" style="border-color: var(--accent)"/>
         <div class="menu-label">
           <div id="sidebar-username" class="text-sm font-semibold">کاربر</div>
           <div class="text-xs text-[var(--muted)]">آنلاین</div>
         </div>
       </div>
     </aside>
-
-    <!-- overlay موبایل (موقتی، فقط وقتی sidebar باز است) -->
     <div id="main-overlay" class="hidden md:hidden"></div>
-
-    <!-- Main content -->
     <div id="main" class="flex-1 flex flex-col">
-      <!-- header -->
-      <header
-        class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-[var(--bg)]"
-      >
+      <header class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800 bg-[var(--bg)]">
         <div class="flex items-center gap-4">
-          <!-- دکمه برای باز/بسته کردن سایدبار در دکستاپ (همچنین هاور فعال) -->
-          <button
-            id="sidebar-toggle"
-            class="hidden md:inline-flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-            aria-label="باز/بسته کردن منو"
-          >
+          <button id="sidebar-toggle" class="hidden md:inline-flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="باز/بسته کردن منو">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M4 6h16M4 12h16M4 18h16"
-                stroke="currentColor"
-                stroke-width="2"
-              />
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2"/>
             </svg>
           </button>
-
           <div>
             <h1 class="text-lg font-bold">🎬 Movie AI Chat</h1>
-            <p id="header-username" class="text-xs text-[var(--muted)]">
-              خوش آمدید
-            </p>
+            <p id="header-username" class="text-xs text-[var(--muted)]">خوش آمدید</p>
           </div>
         </div>
-
         <div class="flex items-center gap-3">
-          <!-- نشانگر تم و آواتار کنار هم -->
-          <button
-            id="theme-toggle"
-            class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-            aria-label="تغییر تم"
-          >
+          <button id="theme-toggle" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="تغییر تم">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"
-                stroke="currentColor"
-                stroke-width="1.5"
-              />
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="1.5"/>
             </svg>
           </button>
-          <img
-            id="header-avatar"
-            src="https://i.pravatar.cc/36"
-            alt="avatar"
-            class="w-9 h-9 rounded-full border-2"
-            style="border-color: var(--accent)"
-          />
+          <img id="header-avatar" src="https://i.pravatar.cc/36" alt="avatar" class="w-9 h-9 rounded-full border-2" style="border-color: var(--accent)"/>
         </div>
       </header>
-
-      <!-- main chat area -->
       <main class="flex-1 flex flex-col">
         <div id="chat-container" class="flex-1 overflow-hidden flex flex-col">
-          <div
-            id="chat-box"
-            class="flex-1 overflow-y-auto chat-scroll p-6 space-y-4 bg-[var(--card)]"
-          >
-            <!-- پیام‌ها اضافه میشن -->
-          </div>
-
-          <!-- input area -->
-          <form
-            id="chat-form"
-            class="flex items-center gap-3 p-4 bg-[var(--bg)] border-t border-gray-200 dark:border-gray-800"
-          >
+          <div id="chat-box" class="flex-1 overflow-y-auto chat-scroll p-6 space-y-4 bg-[var(--card)]"></div>
+          <form id="chat-form" class="flex items-center gap-3 p-4 bg-[var(--bg)] border-t border-gray-200 dark:border-gray-800">
             <div class="flex-1">
-              <input
-                id="user-input"
-                dir="auto"
-                autocomplete="off"
-                class="w-full rounded-full px-4 py-3 bg-white dark:bg-[#071022] border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-                placeholder="پیام خود را بنویسید..."
-              />
+              <input id="user-input" dir="auto" autocomplete="off" class="w-full rounded-full px-4 py-3 bg-white dark:bg-[#071022] border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]" placeholder="پیام خود را بنویسید..."/>
             </div>
-
-            <button
-              id="send-btn"
-              type="submit"
-              class="px-4 py-2 rounded-full text-white"
-              style="background: var(--accent)"
-            >
-              ارسال
-            </button>
+            <button id="send-btn" type="submit" class="px-4 py-2 rounded-full text-white" style="background: var(--accent)">ارسال</button>
           </form>
         </div>
       </main>
     </div>
-
-    <!-- پنل شخصی‌سازی (پاپ‌آپ داخل صفحه) -->
-    <div
-      id="customize-panel"
-      class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 hidden w-96 bg-[var(--bg)] rounded-xl shadow-2xl border border-gray-100 dark:border-gray-800"
-    >
-      <div
-        class="px-5 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between"
-      >
+    <div id="customize-panel" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 hidden w-96 bg-[var(--bg)] rounded-xl shadow-2xl border border-gray-100 dark:border-gray-800">
+      <div class="px-5 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
         <div>
           <div class="font-bold">شخصی‌سازی</div>
-          <div class="text-xs text-[var(--muted)]">
-            تم و رنگ آکست را انتخاب کنید
-          </div>
+          <div class="text-xs text-[var(--muted)]">تم و رنگ آکست را انتخاب کنید</div>
         </div>
-        <button
-          id="close-customize"
-          class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
-        >
-          ✕
-        </button>
+        <button id="close-customize" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">✕</button>
       </div>
-
       <div class="p-5 space-y-4">
-        <!-- تم -->
         <div>
           <div class="text-sm font-medium mb-2">تم</div>
           <div class="flex gap-2">
-            <button
-              data-theme="light"
-              class="px-3 py-2 rounded-lg border w-24 text-sm"
-            >
-              روشن
-            </button>
-            <button
-              data-theme="dark"
-              class="px-3 py-2 rounded-lg border w-24 text-sm"
-            >
-              تاریک
-            </button>
+            <button data-theme="light" class="px-3 py-2 rounded-lg border w-24 text-sm">روشن</button>
+            <button data-theme="dark" class="px-3 py-2 rounded-lg border w-24 text-sm">تاریک</button>
           </div>
         </div>
-
-        <!-- رنگ آکست -->
         <div>
           <div class="text-sm font-medium mb-2">رنگ آکِسِنت</div>
           <div class="flex gap-3 items-center">
-            <!-- گزینه‌ها -->
-            <button
-              class="accent-swatch w-8 h-8 rounded-full"
-              data-color="#7c3aed"
-              style="background: #7c3aed; border: 2px solid rgba(0, 0, 0, 0.05)"
-            ></button>
-            <button
-              class="accent-swatch w-8 h-8 rounded-full"
-              data-color="#06b6d4"
-              style="background: #06b6d4"
-            ></button>
-            <button
-              class="accent-swatch w-8 h-8 rounded-full"
-              data-color="#10b981"
-              style="background: #10b981"
-            ></button>
-            <button
-              class="accent-swatch w-8 h-8 rounded-full"
-              data-color="#f59e0b"
-              style="background: #f59e0b"
-            ></button>
-            <button
-              class="accent-swatch w-8 h-8 rounded-full"
-              data-color="#ef4444"
-              style="background: #ef4444"
-            ></button>
-            <button
-              id="accent-custom"
-              class="w-8 h-8 rounded-full flex items-center justify-center border"
-              title="رنگ دلخواه"
-            >
-              🎨
-            </button>
+            <button class="accent-swatch w-8 h-8 rounded-full" data-color="#7c3aed" style="background: #7c3aed; border: 2px solid rgba(0,0,0,0.05)"></button>
+            <button class="accent-swatch w-8 h-8 rounded-full" data-color="#06b6d4" style="background: #06b6d4"></button>
+            <button class="accent-swatch w-8 h-8 rounded-full" data-color="#10b981" style="background: #10b981"></button>
+            <button class="accent-swatch w-8 h-8 rounded-full" data-color="#f59e0b" style="background: #f59e0b"></button>
+            <button class="accent-swatch w-8 h-8 rounded-full" data-color="#ef4444" style="background: #ef4444"></button>
+            <button id="accent-custom" class="w-8 h-8 rounded-full flex items-center justify-center border" title="رنگ دلخواه">🎨</button>
           </div>
         </div>
-
         <div class="flex justify-end gap-3">
-          <button id="reset-style" class="px-3 py-2 rounded-md border">
-            بازنشانی
-          </button>
-          <button
-            id="apply-style"
-            class="px-3 py-2 rounded-md text-white"
-            style="background: var(--accent)"
-          >
-            اعمال
-          </button>
+          <button id="reset-style" class="px-3 py-2 rounded-md border">بازنشانی</button>
+          <button id="apply-style" class="px-3 py-2 rounded-md text-white" style="background: var(--accent)">اعمال</button>
         </div>
       </div>
     </div>
 
-    <!-- اسکریپت اصلی -->
+    
     <script>
-      /* ========= عناصر ========= */
       const sidebar = document.getElementById("sidebar");
       const sidebarToggle = document.getElementById("sidebar-toggle");
-      const sidebarToggleMobile = document.getElementById(
-        "sidebar-toggle-mobile"
-      );
+      const sidebarToggleMobile = document.getElementById("sidebar-toggle-mobile");
       const mainOverlay = document.getElementById("main-overlay");
       const openCustomize = document.getElementById("open-customize");
       const customizePanel = document.getElementById("customize-panel");
@@ -439,254 +185,108 @@
       const accentCustom = document.getElementById("accent-custom");
       const resetStyle = document.getElementById("reset-style");
 
-      /* ========= تنظیمات اولیه از localStorage ========= */
-      const LS_THEME = "movieai_theme"; // 'light' | 'dark'
-      const LS_ACCENT = "movieai_accent"; // hex
+      const LS_THEME = "movieai_theme";
+      const LS_ACCENT = "movieai_accent";
 
       function setAccent(hex) {
         document.documentElement.style.setProperty("--accent", hex);
-        // border/avatars etc
-        document
-          .querySelectorAll("#sidebar-avatar, #header-avatar")
-          .forEach((el) => (el.style.borderColor = hex));
-        // دکمه اعمال رنگ:
+        document.querySelectorAll("#sidebar-avatar, #header-avatar").forEach((el) => el.style.borderColor = hex);
         applyStyleBtn.style.background = hex;
-        // ذخیره
         localStorage.setItem(LS_ACCENT, hex);
       }
-
       function setTheme(mode) {
-        if (mode === "dark") {
-          document.documentElement.classList.add("dark");
-          localStorage.setItem(LS_THEME, "dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-          localStorage.setItem(LS_THEME, "light");
-        }
+        if(mode==="dark"){document.documentElement.classList.add("dark");localStorage.setItem(LS_THEME,"dark");}
+        else{document.documentElement.classList.remove("dark");localStorage.setItem(LS_THEME,"light");}
       }
+      (function loadSettings(){setAccent(localStorage.getItem(LS_ACCENT)||"#7c3aed");setTheme(localStorage.getItem(LS_THEME)||"light");})();
 
-      // بارگذاری تنظیمات ذخیره شده
-      (function loadSettings() {
-        const savedAccent = localStorage.getItem(LS_ACCENT) || "#7c3aed";
-        const savedTheme = localStorage.getItem(LS_THEME) || "light";
-        setAccent(savedAccent);
-        setTheme(savedTheme);
-      })();
-
-      /* ========= کنترل سایدبار (دسکتاپ هاور و دکستاپ کلیک و موبایل دکمه) ========= */
-      // حالت اولیه collapsed
       sidebar.classList.add("collapsed");
+      let hoverExpand=false;
+      sidebar.addEventListener("mouseenter",()=>{if(window.matchMedia("(min-width:768px)").matches){sidebar.classList.remove("collapsed");sidebar.classList.add("expanded");hoverExpand=true;}});
+      sidebar.addEventListener("mouseleave",()=>{if(hoverExpand){sidebar.classList.remove("expanded");sidebar.classList.add("collapsed");hoverExpand=false;}});
+      let pinned=false;
+      sidebarToggle&&sidebarToggle.addEventListener("click",()=>{pinned=!pinned;if(pinned){sidebar.classList.remove("collapsed");sidebar.classList.add("expanded");}else{sidebar.classList.remove("expanded");sidebar.classList.add("collapsed");}});
+      sidebarToggleMobile&&sidebarToggleMobile.addEventListener("click",()=>{if(sidebar.classList.contains("open")){sidebar.classList.remove("open");mainOverlay.classList.add("hidden");}else{sidebar.classList.add("open");mainOverlay.classList.remove("hidden");}});
+      mainOverlay&&mainOverlay.addEventListener("click",()=>{sidebar.classList.remove("open");mainOverlay.classList.add("hidden");});
+      openCustomize.addEventListener("click",()=>{customizePanel.classList.remove("hidden");customizePanel.classList.add("fade-in");});
+      closeCustomize.addEventListener("click",()=>{customizePanel.classList.add("hidden");});
+      document.querySelectorAll("[data-theme]").forEach(btn=>{btn.addEventListener("click",()=>setTheme(btn.getAttribute("data-theme")));});
+      themeToggle.addEventListener("click",()=>{setTheme(document.documentElement.classList.contains("dark")?"light":"dark");});
+      accentSwatches.forEach(s=>{s.addEventListener("click",()=>setAccent(s.getAttribute("data-color")));});
+      accentCustom.addEventListener("click",()=>{const hex=prompt("کد رنگ هگز (مثال: #ff0088) را وارد کنید:");if(hex && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(hex.trim())){setAccent(hex.trim());}else alert("کد رنگ نامعتبر است");});
+      resetStyle.addEventListener("click",()=>{setAccent("#7c3aed");setTheme("light");localStorage.removeItem(LS_ACCENT);localStorage.removeItem(LS_THEME);});
+      applyStyleBtn.addEventListener("click",()=>{customizePanel.classList.add("hidden");});
 
-      // هاور دسکتاپ: وقتی ماوس وارد شد expand شو (فقط برای صفحه‌نمایش‌های >= md)
-      let hoverExpand = false;
-      sidebar.addEventListener("mouseenter", () => {
-        if (window.matchMedia("(min-width:768px)").matches) {
-          sidebar.classList.remove("collapsed");
-          sidebar.classList.add("expanded");
-          hoverExpand = true;
-        }
-      });
-      sidebar.addEventListener("mouseleave", () => {
-        if (hoverExpand) {
-          sidebar.classList.remove("expanded");
-          sidebar.classList.add("collapsed");
-          hoverExpand = false;
-        }
-      });
-
-      // دکمه کلیک دسکتاپ (برای قفل کردن باز بودن)
-      let pinned = false;
-      sidebarToggle &&
-        sidebarToggle.addEventListener("click", () => {
-          pinned = !pinned;
-          if (pinned) {
-            sidebar.classList.remove("collapsed");
-            sidebar.classList.add("expanded");
-          } else {
-            sidebar.classList.remove("expanded");
-            sidebar.classList.add("collapsed");
-          }
-        });
-
-      // موبایل: با کلیک دکمه open/close کنیم
-      sidebarToggleMobile &&
-        sidebarToggleMobile.addEventListener("click", () => {
-          if (sidebar.classList.contains("open")) {
-            sidebar.classList.remove("open");
-            mainOverlay.classList.add("hidden");
-          } else {
-            sidebar.classList.add("open");
-            mainOverlay.classList.remove("hidden");
-          }
-        });
-
-      // overlay کلیک => بستن
-      mainOverlay &&
-        mainOverlay.addEventListener("click", () => {
-          sidebar.classList.remove("open");
-          mainOverlay.classList.add("hidden");
-        });
-
-      /* ========= پنل شخصی‌سازی ========= */
-      openCustomize.addEventListener("click", () => {
-        customizePanel.classList.remove("hidden");
-        customizePanel.classList.add("fade-in");
-      });
-      closeCustomize.addEventListener("click", () => {
-        customizePanel.classList.add("hidden");
-      });
-
-      // تغییر تم دکمه‌ها در پنل
-      document.querySelectorAll("[data-theme]").forEach((btn) => {
-        btn.addEventListener("click", () =>
-          setTheme(btn.getAttribute("data-theme"))
-        );
-      });
-
-      // سوئیچ تم عمومی (ایکن بالای هدر)
-      themeToggle.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.contains("dark");
-        setTheme(isDark ? "light" : "dark");
-      });
-
-      // انتخاب رنگ‌های از قبل آماده
-      accentSwatches.forEach((s) => {
-        s.addEventListener("click", () => {
-          const hex = s.getAttribute("data-color");
-          setAccent(hex);
-        });
-      });
-
-      // رنگ دلخواه (prompt ساده) — میتونی این رو با color input جایگزین کنی
-      accentCustom.addEventListener("click", () => {
-        const hex = prompt("کد رنگ هگز (مثال: #ff0088) را وارد کنید:");
-        if (hex && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(hex.trim())) {
-          setAccent(hex.trim());
-        } else alert("کد رنگ نامعتبر است");
-      });
-
-      // بازنشانی
-      resetStyle.addEventListener("click", () => {
-        setAccent("#7c3aed");
-        setTheme("light");
-        localStorage.removeItem(LS_ACCENT);
-        localStorage.removeItem(LS_THEME);
-      });
-
-      // دکمه اعمال - فقط پنهان نیست چون setAccent/setTheme همزمان ذخیره میکنن
-      applyStyleBtn.addEventListener("click", () => {
-        customizePanel.classList.add("hidden");
-      });
-
-      /* ========= چت — اضافه کردن پیام و ارسال به بک‌اند ========= */
-      function addMessage(text, sender = "user") {
-        const wrapper = document.createElement("div");
-        wrapper.className =
-          "flex items-end gap-3 fade-in " +
-          (sender === "user" ? "justify-end" : "justify-start");
-
-        const bubble = document.createElement("div");
-        bubble.className = "max-w-[78%] px-4 py-2 rounded-2xl shadow";
-
-        if (sender === "user") {
-          bubble.classList.add("user-bubble");
-          bubble.style.background = "var(--accent)";
-          bubble.style.color = "#fff";
-          bubble.style.borderBottomRightRadius = "6px";
-        } else {
-          bubble.classList.add("bot-bubble");
-          bubble.style.background = "var(--card)";
-          bubble.style.color = "var(--text)";
-          bubble.style.borderBottomLeftRadius = "6px";
-        }
-
-        const p = document.createElement("div");
-        p.style.whiteSpace = "pre-wrap";
-        p.textContent = text; 
-
-        const time = document.createElement("div");
-        time.className = "text-[11px] opacity-70 mt-1 text-right";
-        time.textContent = new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-
-        bubble.appendChild(p);
-        bubble.appendChild(time);
-
-        wrapper.appendChild(bubble);
-        chatBox.appendChild(wrapper);
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-
-      
-      function addTyping() {
-        const el = document.createElement("div");
-        el.id = "__typing";
-        el.className = "flex justify-start fade-in";
-        el.innerHTML = `<div class="px-4 py-2 rounded-2xl shadow text-[var(--muted)] bg-[var(--card)]">در حال نوشتن...</div>`;
-        chatBox.appendChild(el);
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-      function removeTyping() {
-        document.getElementById("__typing")?.remove();
-      }
-
-      // ارسال فرم
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const message = input.value.trim();
-        if (!message) return;
-        addMessage(message, "user");
-        input.value = "";
-        addTyping();
-
-        try {
-          const response = await fetch("{% url 'chatbot' %}", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              "X-CSRFToken": "{{ csrf_token }}",
-            },
-            body: new URLSearchParams({ message }),
+      // ========== چت با پشتیبانی لیست فیلم ==========
+      function addMessage(data,sender="user"){
+        const wrapper=document.createElement("div");
+        wrapper.className="flex items-end gap-3 fade-in "+(sender==="user"?"justify-end":"justify-start");
+        if(sender==="bot" && data.type==="movies"){
+          const container=document.createElement("div");
+          container.className="grid gap-4";
+          data.movies.forEach(movie=>{
+            const card=document.createElement("div");
+            card.className="bg-[var(--card)] dark:bg-[#0f1724] p-3 rounded-xl shadow flex flex-col md:flex-row gap-3";
+            const img=document.createElement("img");
+            img.src=movie.poster_url; img.alt=movie.title;
+            img.className="w-32 h-48 object-cover rounded-lg flex-shrink-0"; card.appendChild(img);
+            const info=document.createElement("div"); info.className="flex-1 flex flex-col gap-2";
+            const title=document.createElement("div"); title.textContent=movie.title; title.className="font-bold text-lg text-[var(--text)]"; info.appendChild(title);
+            const summary=document.createElement("div"); summary.textContent=movie.summary; summary.className="text-sm text-[var(--muted)]"; info.appendChild(summary);
+            const linksContainer=document.createElement("div"); linksContainer.className="flex flex-wrap gap-2 mt-2";
+            movie.sources.forEach(source=>{
+              const a=document.createElement("a"); a.href=source.link; a.target="_blank";
+              a.className="px-2 py-1 text-xs rounded-md border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition";
+              a.textContent=`${source.site_name} (${source.qualities.join(", ")})`;
+              linksContainer.appendChild(a);
+            });
+            info.appendChild(linksContainer);
+            card.appendChild(info);
+            container.appendChild(card);
           });
-          if (!response.ok) throw new Error("network");
-          const data = await response.json();
+          wrapper.appendChild(container);
+        }else{
+          const bubble=document.createElement("div"); bubble.className="max-w-[78%] px-4 py-2 rounded-2xl shadow";
+          if(sender==="user"){ bubble.classList.add("user-bubble"); bubble.style.background="var(--accent)"; bubble.style.color="#fff"; bubble.style.borderBottomRightRadius="6px"; }
+          else{ bubble.classList.add("bot-bubble"); bubble.style.background="var(--card)"; bubble.style.color="var(--text)"; bubble.style.borderBottomLeftRadius="6px"; }
+          const p=document.createElement("div"); p.style.whiteSpace="pre-wrap"; p.textContent=data.response||data;
+          const time=document.createElement("div"); time.className="text-[11px] opacity-70 mt-1 text-right";
+          time.textContent=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+          bubble.appendChild(p); bubble.appendChild(time); wrapper.appendChild(bubble);
+        }
+        chatBox.appendChild(wrapper); chatBox.scrollTop=chatBox.scrollHeight;
+      }
+
+      function addTyping(){const el=document.createElement("div"); el.id="__typing"; el.className="flex justify-start fade-in"; el.innerHTML=`<div class="px-4 py-2 rounded-2xl shadow text-[var(--muted)] bg-[var(--card)]">در حال نوشتن...</div>`; chatBox.appendChild(el); chatBox.scrollTop=chatBox.scrollHeight;}
+      function removeTyping(){document.getElementById("__typing")?.remove();}
+
+      form.addEventListener("submit",async(e)=>{
+        e.preventDefault();
+        const message=input.value.trim();
+        if(!message) return;
+        addMessage(message,"user");
+        input.value="";
+        addTyping();
+        try{
+          const response=await fetch("{% url 'chatbot' %}",{
+            method:"POST",
+            headers:{"Content-Type":"application/x-www-form-urlencoded","X-CSRFToken":"{{ csrf_token }}"},
+            body:new URLSearchParams({message}),
+          });
+          if(!response.ok) throw new Error("network");
+          const data=await response.json();
           removeTyping();
-          addMessage(data.response || "پاسخی دریافت نشد", "bot");
-        } catch (err) {
+          addMessage(data,"bot");
+        }catch(err){
           removeTyping();
-          addMessage("⚠️ خطا در ارتباط با سرور. بعدا تلاش کنید.", "bot");
+          addMessage("⚠️ خطا در ارتباط با سرور. بعدا تلاش کنید.","bot");
         }
       });
 
-      // نمونه پیام خوش‌آمدگویی (در صورت تمایل میتونی حذف کنی)
-      setTimeout(
-        () =>
-          addMessage(
-            "سلام 👋 من Movie AI هستم! درباره فیلم‌ها ازم بپرس 🎬",
-            "bot"
-          ),
-        650
-      );
+      setTimeout(()=>addMessage("سلام 👋 من Movie AI هستم! درباره فیلم‌ها ازم بپرس 🎬","bot"),650);
 
-      /* ========= رفتار هنگام تغییر اندازه صفحه ========= */
-      window.addEventListener("resize", () => {
-        if (window.matchMedia("(min-width:768px)").matches) {
-          // مطمئن شو overlay مخفی باشه در دسکتاپ
-          mainOverlay.classList.add("hidden");
-          sidebar.classList.remove("open");
-        }
-      });
-
-      /* ========= دسترسی کیبورد: Esc برای بستن پنل‌ها ========= */
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          customizePanel.classList.add("hidden");
-          sidebar.classList.remove("open");
-          mainOverlay.classList.add("hidden");
-        }
-      });
+      window.addEventListener("resize",()=>{if(window.matchMedia("(min-width:768px)").matches){mainOverlay.classList.add("hidden"); sidebar.classList.remove("open");}});
+      window.addEventListener("keydown",(e)=>{if(e.key==="Escape"){customizePanel.classList.add("hidden");sidebar.classList.remove("open"); mainOverlay.classList.add("hidden");}});
     </script>
   </body>
 </html>
